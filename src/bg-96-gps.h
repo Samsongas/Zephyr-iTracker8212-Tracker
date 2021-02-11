@@ -1,10 +1,11 @@
 /* AT Commands to be sent to BG96 */
-const char GPS-ON[] = "AT+QGPS=1\n" /* Turn on the GPS */
-const char GPS-LOC[] = "AT+QGPSLOC?\n" /* Receive GPS location */
-const char GPS-OFF[] = "AT+QGPSEND\n" /* Turn off the GPS */
+const char GPS-ON[] = "AT+QGPS=1" /* Turn on the GPS */
+/* mode 2 <latitude>,<longitude> format: (-)dd.ddddd,(-)ddd.ddddd */
+const char GPS-LOC[] = "AT+QGPSLOC=2" /* Receive GPS location */
+const char GPS-OFF[] = "AT+QGPSEND" /* Turn off the GPS */
 
 /* BG96 responses */
-const char GPS-OK[] = "OK\n" /* OK message */
+const char GPS-OK[] = "OK" /* OK message */
 const char GPS-POS[] = "+QGPSLOC:"	/* Receiving location. Starting string */
 
 /*
