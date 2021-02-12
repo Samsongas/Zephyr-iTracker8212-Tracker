@@ -11,16 +11,13 @@ const struct uart_config uart_cfg = {
 		.flow_ctrl = UART_CFG_FLOW_CTRL_NONE
 	};
 
-/* UART Global variables */
-const struct device *uart_dev;
-
 /* 
  * Initialization of UART.
  * Must be run before any other function.
  */
-static int uart_init(void)
+int uart_init(void)
 {
-	*uart_dev = device_get_binding(UART_DEVICE_NAME);
+	const struct device *uart_dev = device_get_binding(UART_DEVICE_NAME);
 	/* If the binding has not been possible */
 	if (!uart_dev) {
 		/* Return -1 */
@@ -39,13 +36,14 @@ static int uart_init(void)
  * Read from the UART until an end of line char is read.
  * Save data to buffer parameter.
  */
-static int uart_read(char *buff)
+int uart_read(char *buff)
 {
+	const struct device *uart_dev = device_get_binding(UART_DEVICE_NAME);
 	uint8_t recvData;
 	int ret;
 	uint8_t cnt = 0;
 	do {
-		ret = uart_fifo_read(dev, &recvData, 1);
+		ret = uart_fifo_read(uart_dev, &recvData, 1);
 		if(ret != 1)
 			break;
 		buff[cnt] = recvData;
@@ -58,10 +56,11 @@ static int uart_read(char *buff)
 /* 
  * Write to the UART from buffer parameter.
  */
-static int uart_send(char *buff)
+int uart_send(const char *buff)
 {
+	const struct device *uart_dev = device_get_binding(UART_DEVICE_NAME);
 	int ret;
-	ret = uart_fifo_fill(dev, (uint8_t *)&buff, strlen(buff));
+	ret = uart_fifo_fill(uart_dev, (uint8_t *)&buff, strlen(buff));
 	/* 0 if successful, -1 otherwise */
 	return (ret == strlen(buff))? 0 : -1;
 }

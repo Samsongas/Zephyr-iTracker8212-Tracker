@@ -1,19 +1,24 @@
+#ifndef __BG_96_UART_H__
+#define __BG_96_UART_H__
+
 #include <drivers/uart.h>
 
-#define UART_DEVICE_NAME CONFIG_UART_CONSOLE_ON_DEV_NAME
+#define UART_DEVICE_NAME "UART_0"
 #define BUFF_MAX_LENGTH 50
 
 /* 
  * Initialization of UART.
  * Must be run before any other function.
  */
-static int uart_init(void);
+int uart_init(void);
 /* 
  * Read from the UART until an end of line char is read.
  * Save data to buffer parameter.
  */
-static int uart_read(char *buff);
+int uart_read(char *buff);
 /* 
  * Write to the UART from buffer parameter.
  */
-static int uart_send(char *buff);
+int uart_send(const char *buff);
+
+#endif
